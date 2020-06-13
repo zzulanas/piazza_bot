@@ -5,7 +5,7 @@ import sys
 
 def main():
     p = Piazza()
-    p.user_login(email="zzulanas@ucsc.edu", password="ZYTron321!@#")
+    p.user_login(email="ENTER USERNAME HERE", password="ENTER PASSWORD HERE")
 
     piazza_url = urlparse(sys.argv[1])
 
