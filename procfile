@@ -1,1 +1,2 @@
+worker: echo test
 worker: python3 connect.py
