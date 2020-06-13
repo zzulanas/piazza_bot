@@ -3,6 +3,7 @@ import os
 import discord
 from dotenv import load_dotenv
 import random
+import test
 
 
 load_dotenv()
@@ -25,8 +26,10 @@ async def on_message(message):
         ),
     ]
 
-    if message.content == '99!':
-        response = random.choice(brooklyn_99_quotes)
+    temp = test.piazza_parse(message.content)
+
+    if "piazza" in message.content:
+        response = temp
         await message.channel.send(response)
 
 
