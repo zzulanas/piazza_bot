@@ -2,10 +2,11 @@ from piazza_api import Piazza
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 import sys
+import os
 
 def main():
     p = Piazza()
-    p.user_login(email="ENTER USERNAME HERE", password="ENTER PASSWORD HERE")
+    p.user_login(email=os.environ['EMAIL'], password=os.environ['PASSWORD'])
 
     piazza_url = urlparse(sys.argv[1])
 
