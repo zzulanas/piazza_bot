@@ -6,11 +6,13 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from pprint import pprint
 
-def main():
+def piazza_parse(pi_url):
+    temp = ""
     p = Piazza()
     p.user_login(email=os.environ['EMAIL'], password=os.environ['PASSWORD'])
 
-    piazza_url = urlparse(sys.argv[1])
+    #piazza_url = urlparse(sys.argv[1])
+    piazza_url = urlparse(pi_url)
 
     class_id = piazza_url.path.split('/')[2]
     post_num = piazza_url.query.split('=')[1]
@@ -28,9 +30,9 @@ def main():
     print(post["history"][0])
     print()
 
-    print("SUBJECT")
-    print('-----------------')
-    print(subject)
+    temp += "SUBJECT\n"
+    temp+='-----------------\n'
+    temp += subject + '\n'
     print()
 
     # Content of post that includes html tags
@@ -40,17 +42,22 @@ def main():
     # print(question)
     # print()
 
-    print("CONTENT")
-    print('-----------------')
+    temp += "CONTENT\n"
+    temp += '-----------------\n'
     question_text = BeautifulSoup(question, features='lxml').text
-    print(question_text)
+    temp += question_text + '\n'
 
     answers = post["children"]
     print()
 
-    print("ANSWERS")
-    print('-----------------')
-    pprint(answers)
+    temp += "ANSWERS\n"
+    temp += '-----------------\n'
+    #TODO concatenate all answers? or just one
+    #temp += answers
+
+    return temp
 
 if __name__ == "__main__":
     main()
+
+    
