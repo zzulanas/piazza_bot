@@ -1,8 +1,10 @@
+#!/usr/bin/env python
+import sys
+import os
 from piazza_api import Piazza
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-import sys
-import os
+
 
 def main():
     p = Piazza()
