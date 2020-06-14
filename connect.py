@@ -26,10 +26,10 @@ async def on_message(message):
         ),
     ]
 
-    temp = test.piazza_parse(message.content)
+    # temp = test.piazza_parse(message.content)
 
     if "piazza.com" in message.content:
-        response = temp
+        response = test.piazza_parse(message.content)
         await message.channel.send(response)
     elif message.content == 'raise-exception':
         raise discord.DiscordException
