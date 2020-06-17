@@ -34,7 +34,7 @@ will automatically be deployed.
 
 ## Built With
 - Python
-- [Piazza API](https://github.com/hfaran/piazza-api)
+- [piazza-api](https://github.com/hfaran/piazza-api)
 - [discord.py](https://github.com/Rapptz/discord.py)
 
 ## Contributors
