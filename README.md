@@ -22,6 +22,8 @@ pip3 install -r requirements
 ```
 export EMAIL='{your email here}'
 export PASSWORD='{your password here}`
+export DISCORD_TOKEN='{your Discord Bot Token}'
+export GUILD_ID='{your server ID}'
 ```
 3. Then run the program with `python3 ./connect.py`
 
