@@ -1,71 +1,68 @@
-#!/usr/bin/env python
-import sys
-import os
+import sys, os
 from piazza_api import Piazza
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from pprint import pprint
 
 def piazza_parse(pi_url):
+    '''
+    Called by connect.py to get post from Piazza.
+    It will format the post json into a more readable message for server.
+    '''
+
+    # Create Piazza object, login, and get the users classes
     temp = ""
     p = Piazza()
     p.user_login(email=os.environ['EMAIL'], password=os.environ['PASSWORD'])
     classes = p.get_user_classes()
 
-    #piazza_url = urlparse(sys.argv[1])
+    # Parse the piazza url into components
     piazza_url = urlparse(pi_url)
 
+    # Get class id and the post number from piazza_url
     class_id = piazza_url.path.split('/')[2]
     post_num = piazza_url.query.split('=')[1]
     
     # Returns a class network
     class_net = p.network(class_id)
 
+    # Get the piazza post from the post number and class network
     post = class_net.get_post(post_num)
 
+    # Get class name
     class_name = "None"
     for i in classes:
         if i['nid'] == class_id:
             class_name = i['num']
+
+    # Get question and subject of the post
     question = post["history"][0]["content"]
     subject = post["history"][0]["subject"]
 
-    # print("QUESTION JSON")
-    # print('-----------------')
-    # print(post["history"][0])
-    # print()
-
+    # Format class name, subject, and post content for Discord
     temp += "__**CLASS NAME**__\n"
     temp += class_name + '\n\n'
     temp += "__**SUBJECT**__\n"
     temp += subject + '\n\n'
-
-
-    # Content of post that includes html tags
-    #
-    # print("CONTENT")
-    # print('-----------------')
-    # print(question)
-    # print()
-
     temp += "__**CONTENT**__\n"
     question_text = BeautifulSoup(question, features='lxml').text
     temp += question_text + '\n\n'
 
+    # Get answers json
     answers = post["children"]
-
-    #TODO concatenate all answers? or just one
-    #temp += answers
     
+    # Init student and instructor json answers
     s_answer_json = None
     i_answer_json = None
 
+    # Assign student and instructor answers if they exist
     for answer in answers:
         if answer['type'] == 's_answer':
             s_answer_json = answer
         elif answer['type'] == 'i_answer':
             i_answer_json = answer
 
+    # Format student and/or instructor answer if they exist
     if s_answer_json is not None:
         temp += "__**STUDENT ANSWER**__\n"
         s_answer = s_answer_json['history'][0]['content']
@@ -78,12 +75,4 @@ def piazza_parse(pi_url):
         i_answer_text = BeautifulSoup(i_answer, features='lxml').text
         temp += i_answer_text
 
-    #     print(i_answer_text)
-    # print()
-
-
     return temp
-
-# When you run this file, it will run the sandbox function for testing
-
-# piazza_parse('https://piazza.com/class/k84o7ugzfyn2l7?cid=681')
