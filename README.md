@@ -41,7 +41,7 @@ will automatically be deployed.
 
 ## Contributors
 - [Zachary Zulanas](https://github.com/zzulanas)
-- [Gico Carlo Evangelsita](https://github.com/RiceAbove)
+- [Gico Carlo Evangelista](https://github.com/RiceAbove)
 
 ## License
 This project is licensed under [MIT](LICENSE) - see the LICENSE file for details
